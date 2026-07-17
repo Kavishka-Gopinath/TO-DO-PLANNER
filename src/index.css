@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.65);
+  --surface-solid: #ffffff;
+  --border: rgba(15, 23, 42, 0.08);
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --shadow: rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  --bg: #0f172a;
+  --surface: rgba(30, 41, 59, 0.55);
+  --surface-solid: #1e293b;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 10% -10%, rgba(79, 70, 229, 0.12), transparent 60%),
+    radial-gradient(1000px 500px at 100% 0%, rgba(124, 58, 237, 0.12), transparent 55%),
+    radial-gradient(900px 600px at 50% 120%, rgba(16, 185, 129, 0.08), transparent 60%);
+  background-attachment: fixed;
+  transition: background-color 0.4s ease, color 0.3s ease;
+}
+
+::selection {
+  background: rgba(79, 70, 229, 0.25);
+}
+
+/* Glass surfaces */
+@layer components {
+  .glass {
+    background: var(--surface);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+
+  .glass-soft {
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+  }
+
+  .gradient-primary {
+    background-image: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  }
+
+  .gradient-soft {
+    background-image: linear-gradient(135deg, rgba(79, 70, 229, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%);
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+  background-clip: padding-box;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.2);
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  animation: shimmer 1.6s infinite;
+}
+
+/* Focus indicators */
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Hide native calendar styling rough edges */
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-calendar-picker-indicator {
+  filter: opacity(0.6);
+  cursor: pointer;
+}
+
+/* Confetti piece */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 2px;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}
